@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser</title>
+<style>
+  html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; background: #1b1b1f; color: #eee; }
+  body { display: flex; flex-direction: column; }
+  form { display: flex; gap: 8px; padding: 8px; background: #26262c; }
+  input { flex: 1; padding: 8px 10px; border-radius: 6px; border: 1px solid #444; background: #111; color: #eee; font-size: 15px; }
+  button { padding: 8px 14px; border: 0; border-radius: 6px; background: #4a7dff; color: #fff; font-size: 15px; cursor: pointer; }
+  iframe { flex: 1; border: 0; width: 100%; background: #fff; }
+</style>
+</head>
+<body>
+  <form id="bar">
+    <input id="url" type="text" placeholder="Type a website, e.g. example.com" autocomplete="off">
+    <button type="submit">Go</button>
+  </form>
+  <!-- Inner frame: the website you type -->
+  <iframe id="view" title="Website"></iframe>
+<script>
+  const input = document.getElementById('url');
+  const view = document.getElementById('view');
+  document.getElementById('bar').addEventListener('submit', e => {
+    e.preventDefault();
+    let u = input.value.trim();
+    if (!u) return;
+    if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    input.value = u;
+    view.src = u;
+  });
+</script>
+</body>
+</html>
