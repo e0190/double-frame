@@ -17,6 +17,7 @@
   <form id="bar">
     <input id="url" type="text" placeholder="Type a website, e.g. example.com" autocomplete="off">
     <button type="submit">Go</button>
+    <button type="button" onclick="if(view.src) window.open(view.src,'_blank')">Open in new tab</button>
   </form>
   <!-- Inner frame: the website you type -->
   <iframe id="view" title="Website"></iframe>
@@ -28,6 +29,8 @@
     let u = input.value.trim();
     if (!u) return;
     if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    // Google blocks framing, except this special embeddable version
+    if (/^https?:\/\/(www\.)?google\.com\/?$/i.test(u)) u = 'https://www.google.com/webhp?igu=1';
     input.value = u;
     view.src = u;
   });
